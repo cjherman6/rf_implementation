@@ -33,9 +33,7 @@ Using Feature importance you can see that the year of the bulldozer is very pred
 
 ![Initial Feature Importance](https://s3.amazonaws.com/chermsbucket/rf_imp_folder/feature_importance.png)
 
-_Feature Importance is calculated by randomizing a certain variable (e.g. mixing up year), passing it through the trained model, and calculating how the prediction accuracy changes when this variable is randomized_
-
-
+_Feature Importance is calculated by randomizing a certain variable in your data (e.g. Randomizing YearMade), passing it through the trained model, and calculating how the prediction accuracy changes when this variable is randomized_
 
 ### Trimming Unimportant Features:
 
@@ -67,27 +65,29 @@ For this section, any feature that had 7 unique values or less, I used pd.get_du
 
 ![Feature Importance after One Hot Encoding](https://s3.amazonaws.com/chermsbucket/rf_imp_folder/one_hot_encoding.png)
 
+_A category in Enclosure has shown to be extremely important with one hot encoding, this variable is telling us that if a bulldozer has an enclosed cockpit with AC, the salesprice is predicted to increase_
+
 ### Partial dependence
 
 It's great to know what features are important to a models prediction (i.e. a bulldozers expected price).  However, it is also important to know **how** a feature affects a models prediction.  One way to do this is prediction interpretation (which I'll explain next), but another way is through calculating partial dependence, which shows how a prediction is affected holding all other variables constant.
-
-#### Year Made:
-
-![Year Made Partial Dependence](https://s3.amazonaws.com/chermsbucket/rf_imp_folder/pdp1.png)
-
-From the graph above, we can see that the newer the model, the higher the sale price of a bull dozer.
-
-#### Product Size:
-
-![Product Size Partial Dependence](https://s3.amazonaws.com/chermsbucket/rf_imp_folder/pdp3.png)
-
-From the graph above, we can see that the bigger the bull dozer, the higher its sale price.
 
 #### Enclosure (Enclosure EROPS w AC):
 
 ![Enclosure Partial Dependence](https://s3.amazonaws.com/chermsbucket/rf_imp_folder/pdp2.png)
 
-What this graph is telling us is that when a bulldozer is enclosed as opposed to open with an Air Conditioning unit, this is predictive of a higher sale price.
+When a bulldozer is enclosed with an air conditioning unit, this is predictive of a higher sale price.
+
+#### Year Made:
+
+![Year Made Partial Dependence](https://s3.amazonaws.com/chermsbucket/rf_imp_folder/pdp1.png)
+
+The **newer** the model, the higher the sale price of a bull dozer.
+
+#### Product Size:
+
+![Product Size Partial Dependence](https://s3.amazonaws.com/chermsbucket/rf_imp_folder/pdp3.png)
+
+The **bigger** the bull dozer, the higher its sale price.
 
 _Partial Dependence is calculated in a similar manner to feature importance, but instead of randomizing the variable, you hold that variable constant and see how each change in that variable effects predictions (e.g. changing all rows to be the year 1990 and then comparing that to all rows being 2004)_
 
@@ -97,7 +97,7 @@ Another way to see how our features can affect a bull dozers sale price is using
 
 A good explanation of how this works can be found [**here**](http://blog.datadive.net/interpreting-random-forests/).
 
-_But in a nutshell: These explanations are done by calculating the change in a given measurement (e.g. average sale price) between nodes after splitting_
+_In a nutshell: These explanations are done by calculating the change in a given measurement (e.g. average sale price) between nodes after splitting_
 
 ![Tree Interpreter](https://s3.amazonaws.com/chermsbucket/rf_imp_folder/tree_interpreter.png)
 
