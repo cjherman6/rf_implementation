@@ -13,7 +13,7 @@ I don't want to delete any of the data so early in the project, so I used a func
 
 The next thing I had to address was continuous variables that had missing values.  What I did is fill the missing values with the columns median, but also created a new column that indicates whether that row had a null value for that column. This way the model can identify if a missing value is important for this variable.
 
-_(ex: a NaN value for a product feature might mean it's a model that doesn't have that product feature, this could be important)_
+_(ex: a NaN value for MachineHoursCurrentMeter might mean it's new and hasn't been used, this could be important)_
 
 ## The Model
 
@@ -29,15 +29,18 @@ _A random forest uses multiple decision trees that take subsamples of the datase
 
 ## Evaluating Features
 
-Using Feature importance you can see that the YearMade and ProductSize are very predictive of a bulldozers sale price:
+_Feature Importance is calculated by randomizing a certain variable in your data (e.g. Randomizing YearMade), passing it through the trained model, and calculating how the prediction accuracy changes when this variable is randomized_
+
+Using Feature importance, we can see that when YearMade and ProductSize were randomized, there were significant drops in model accuracy; meaning these features are very important in predicting price:
 
 ![Initial Feature Importance](https://s3.amazonaws.com/chermsbucket/rf_imp_folder/feature_importance.png)
 
-_Feature Importance is calculated by randomizing a certain variable in your data (e.g. Randomizing YearMade), passing it through the trained model, and calculating how the prediction accuracy changes when this variable is randomized_
 
 ### Trimming Unimportant Features:
 
-At this point you have a decent idea of what features are important to predict a bull dozers price, a good way to trim out non-predictive features is to check the accuracy of the model, drop any values below a certain feature importance threshold (e.g. < 0.005), and check the accuracy of your model again to see if any of the dropped values impact your predictability.
+At this point you have a decent idea of what features are important to predict a bull dozers price.
+
+A good way to trim out non-predictive features is to 1) check the accuracy of the model, 2) drop any values below a certain feature importance threshold (e.g. < 0.005), and 3) check the accuracy of your model again to see if any of the dropped values impact your models score.
 
 ![Feature Importance after Dropping Values](https://s3.amazonaws.com/chermsbucket/rf_imp_folder/feature_importance2.png)
 
