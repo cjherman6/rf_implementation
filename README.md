@@ -11,17 +11,19 @@ The dataset includes a lot of categorical variables in the form of strings, as w
 
 I don't want to delete any of the data so early in the project, so I used a function that will convert all string values into categories and use the category codes to feed into the model.
 
-The next thing I did with continuous predictors that had missing values is fill the missing values with the columns median, but also create a new column that indicates whether that row had a null value or not, so the random forest can see if a missing value is significant.
+The next thing I did with continuous predictors that had missing values is fill the missing values with the columns median, but also create a new column that indicates whether that row had a null value for that column. This way the model can identify if a missing value is significant.
 
 ## The Model
 
 For this project I used a **random forest** because of its flexibility to different datatypes and patterns, as well as its ability to provide insight using feature importance, partial dependence plots, and prediction interpretations using ELI5.
 
-## Insights
+## Evaluating Features
 
 Using Feature importance you can see that the year of the bulldozer is very predictive of its price:
 
 ![Initial Feature Importance](https://s3.amazonaws.com/chermsbucket/rf_imp_folder/feature_importance.png)
+
+Feature Importance is calculated by randomizing a certain variable and calculating the effect this randomization has on a models prediction score.
 
 ### Trimming Unimportant Features:
 
@@ -42,3 +44,41 @@ We can see that there are a lot of variables that are very closely related (e.g.
 There doesn't appear to be any major differences so it is safe to remove these variables.
 
 **We are now at a point where we have reduced the models dimensionality without sacrificing any accuracy.**
+
+## Insights
+
+### One Hot Encoding
+
+Not only is it important to look at the feature importance through a categorical lense, but you can also find insights by breaking apart certain columns using one hot encoding.
+
+For this section, any feature that had 7 unique values or less, I used pd.get_dummies to see if any specific feature values are predictive of price:
+
+![Feature Importance after One Hot Encoding](https://s3.amazonaws.com/chermsbucket/rf_imp_folder/one_hot_encoding.png)
+
+### Partial dependence
+
+It's great to know what features are important to a models prediction (i.e. a bulldozers expected price).  However, it is also important to know **how** a feature affects a models prediction.  One way to do this is prediction interpretation (which I'll explain next), but another way is through calculating partial dependence, which shows how a prediction is affected holding all other variables constant.
+
+#### Year Made:
+
+![Year Made Partial Dependence](https://s3.amazonaws.com/chermsbucket/rf_imp_folder/pdp1.png)
+
+From the graph above, we can see that the newer the model, the higher the sale price of a bull dozer.
+
+#### Product Size:
+
+![Product Size Partial Dependence](https://s3.amazonaws.com/chermsbucket/rf_imp_folder/pdp3.png)
+
+From the graph above, we can see that the bigger the bull dozer, the higher its sale price.
+
+#### Enclosure (Enclosure EROPS w AC):
+
+![Enclosure Partial Dependence](https://s3.amazonaws.com/chermsbucket/rf_imp_folder/pdp2.png)
+
+What this graph is telling us is that when a bulldozer is enclosed as opposed to open with an Air Conditioning unit, this is predictive of a higher sale price.
+
+### Prediction Explanation:
+
+Another way to see how our features can affect a bull dozers sale price is using ELI5 to explain what features contributed to a specific prediction (i.e. an individual row):
+
+![Prediction Interpretation](https://s3.amazonaws.com/chermsbucket/rf_imp_folder/prediction_interpretation.png)
