@@ -13,19 +13,19 @@ I don't want to delete any of the data so early in the project, so I used a func
 
 The next thing I had to address was continuous variables that had missing values.  What I did is fill the missing values with the columns median, but also created a new column that indicates whether that row had a null value for that column. This way the model can identify if a missing value is important for this variable.
 
-__(ex: a NaN value for a product feature might mean it's a model that doesn't have that product feature, this could be important)__
+_(ex: a NaN value for a product feature might mean it's a model that doesn't have that product feature, this could be important)_
 
 ## The Model
 
 For this project I used a **random forest** because of its flexibility with different datatypes and patterns, as well as its ability to provide insight using feature importance, partial dependence plots, and prediction interpretations using ELI5 (this is what we'll be covering).
 
-__A random forest uses decision trees which split on the feature that gives the highest information gain on a models predictions, and continues doing so until the dataset is accounted for.__
+_A random forest uses decision trees which split on the feature that gives the highest information gain on a models predictions, and continues doing so until the dataset is accounted for._
 
-![Decision Tree](http://engineering.pivotal.io/images/interpreting-decision-trees-and-random-forests/multi_clf_dt_path.png)
+![Decision Tree](http://engineering.pivotal.io/images/interpreting_decision_trees_and_random_forests/multi_clf_dt_path.png)
 
-__A random forest uses multiple decision trees that take subsamples of the dataset and split on a subset of the data features, once the estimators spit out their predictions, the mean of all of these predictions is what the random forest will use to predict price.__
+_A random forest uses multiple decision trees that take subsamples of the dataset and split on a subset of the data features, once the estimators spit out their predictions, the mean of all of these predictions is what the random forest will use to predict price._
 
-![Random Forest](https://databricks.com/wp-content/uploads/2015/01/Ensemble-example.png)
+![Random Forest](https://databricks.com/wp_content/uploads/2015/01/Ensemble_example.png)
 
 ## Evaluating Features
 
@@ -33,13 +33,13 @@ Using Feature importance you can see that the year of the bulldozer is very pred
 
 ![Initial Feature Importance](https://s3.amazonaws.com/chermsbucket/rf_imp_folder/feature_importance.png)
 
-__Feature Importance is calculated by randomizing a certain variable (e.g. mixing up year), passing it through the trained model, and calculating how the prediction accuracy changes when this variable is randomized__
+_Feature Importance is calculated by randomizing a certain variable (e.g. mixing up year), passing it through the trained model, and calculating how the prediction accuracy changes when this variable is randomized_
 
 
 
 ### Trimming Unimportant Features:
 
-At this point you have a decent idea of what features are important to predict a bull dozers price, a good way to trim out non-predictive features is to check the accuracy of the model, drop any values below a certain feature importance threshold (e.g. < 0.005), and check the accuracy of your model again to see if any of the dropped values impact your predictability.
+At this point you have a decent idea of what features are important to predict a bull dozers price, a good way to trim out non_predictive features is to check the accuracy of the model, drop any values below a certain feature importance threshold (e.g. < 0.005), and check the accuracy of your model again to see if any of the dropped values impact your predictability.
 
 In this case, the score remains the same so it's safe to say you can remove any variables below that threshold:
 
@@ -89,15 +89,15 @@ From the graph above, we can see that the bigger the bull dozer, the higher its 
 
 What this graph is telling us is that when a bulldozer is enclosed as opposed to open with an Air Conditioning unit, this is predictive of a higher sale price.
 
-__Partial Dependence is calculated in a similar manner to feature importance, but instead of randomizing the variable, you hold that variable constant and see how each change in that variable effects predictions (e.g. changing all rows to be the year 1990 and then comparing that to all rows being 2004)__
+_Partial Dependence is calculated in a similar manner to feature importance, but instead of randomizing the variable, you hold that variable constant and see how each change in that variable effects predictions (e.g. changing all rows to be the year 1990 and then comparing that to all rows being 2004)_
 
 ### Prediction Explanation:
 
 Another way to see how our features can affect a bull dozers sale price is using ELI5 to explain what features contributed to a specific prediction (i.e. an individual row):
 
-A good explanation of how this works can be found [**here**](http://blog.datadive.net/interpreting-random-forests/).
+A good explanation of how this works can be found [**here**](http://blog.datadive.net/interpreting_random_forests/).
 
-__But in a nutshell: These explanations are done by calculating the change in a given measurement (e.g. average sale price) between nodes after splitting__
+_But in a nutshell: These explanations are done by calculating the change in a given measurement (e.g. average sale price) between nodes after splitting_
 
 ![Tree Interpreter](https://s3.amazonaws.com/chermsbucket/rf_imp_folder/tree_interpreter.png)
 
