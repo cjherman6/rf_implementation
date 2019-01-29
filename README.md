@@ -81,14 +81,14 @@ What this graph is telling us is that when a bulldozer is enclosed as opposed to
 
 Another way to see how our features can affect a bull dozers sale price is using ELI5 to explain what features contributed to a specific prediction (i.e. an individual row):
 
-![Prediction Interpretation](https://s3.amazonaws.com/chermsbucket/rf_imp_folder/large_2007_wAC.png)
 #### This is a large, 2007 bull dozer that comes with AC, it's sale price was $105,000
+![Prediction Interpretation](https://s3.amazonaws.com/chermsbucket/rf_imp_folder/large_2007_wAC.png)
 
-![Prediction Interpretation](https://s3.amazonaws.com/chermsbucket/rf_imp_folder/mini_1998_woAC.png)
 #### This is a mini, 1998 bull dozer that has no AC, it's sale price was $
+![Prediction Interpretation](https://s3.amazonaws.com/chermsbucket/rf_imp_folder/mini_1998_woAC.png)
 
+#### This is a mini, 1988 bull dozer that has no AC, it's sale price was $25,000
 ![Prediction Interpretation](https://s3.amazonaws.com/chermsbucket/rf_imp_folder/mini_1988_woAC.png)
-#### This is a mini, 1988 bull dozer that has no AC, it's sale price was $11,000
 
 These further confirm what we saw earlier, that size, year, and AC are good predictors of a bulldozers sale price.
 
