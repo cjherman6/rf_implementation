@@ -38,7 +38,7 @@ Using Feature importance, we can see that when YearMade and ProductSize were ran
 
 ### Trimming Unimportant Features:
 
-At this point you have a decent idea of what features are important to predict a bull dozers price.
+At this point we have a decent idea of what features are important to predict a bull dozers price.
 
 A good way to trim out non-predictive features is to 1) check the accuracy of the model, 2) drop any values below a certain feature importance threshold (e.g. < 0.005), and 3) check the accuracy of your model again to see if any of the dropped values impact your models score.
 
@@ -48,11 +48,11 @@ A good way to trim out non-predictive features is to 1) check the accuracy of th
 
 ### Removing Redundant Features:
 
-Another great insight is to use a correlation matrix along with a dendrogram to identify any redundant features:
+Another great method to reduce dimensions is to use a correlation matrix along with a dendrogram to identify any redundant features:
 
 ![Feature Importance after Dropping Values](https://s3.amazonaws.com/chermsbucket/rf_imp_folder/dendrogram.png)
 
-We can see that there are a lot of variables that are very closely related (e.g. saleYear & saleElapsed, Grouser_Tracks & Coupler_System, etc.).  We can use a similar method that we used in feature importance and test to see the models accuracy when these features are removed.
+We can see that there are a lot of variables that are very closely related (e.g. saleYear & saleElapsed, Grouser_Tracks & Coupler_System, etc.).  We can use a similar method that we used in feature importance and test to see the models accuracy when redundant features are removed.
 
 **We are now at a point where we have reduced the models dimensionality without sacrificing any accuracy.**
 
@@ -60,7 +60,7 @@ We can see that there are a lot of variables that are very closely related (e.g.
 
 ### One Hot Encoding
 
-Not only is it important to look at the feature importance through a categorical lense, but you can also find insights by breaking apart certain columns using one hot encoding.
+Not only is it important to look at the feature importance of a category overall, but we can also find insights by breaking apart certain categories and using one hot encoding for each unique value.
 
 For this section, any feature that had 7 unique values or less, I used pd.get_dummies to see if any specific feature values are predictive of price:
 
@@ -71,6 +71,8 @@ _A category in Enclosure has shown to be extremely important with one hot encodi
 ### Partial dependence
 
 It's great to know what features are important to a models prediction (i.e. a bulldozers expected price).  However, it is also important to know **how** a feature affects a models prediction.  One way to do this is prediction interpretation (which I'll explain next), but another way is through calculating partial dependence, which shows how a prediction is affected holding all other variables constant.
+
+_Partial Dependence is calculated in a similar manner to feature importance, but instead of randomizing the variable, you hold that variable constant and see how each change in that variable effects predictions (e.g. changing all rows to be the year 1990 and then comparing that to all rows being 2004)_
 
 #### Enclosure (Enclosure EROPS w AC):
 
@@ -89,8 +91,6 @@ The **newer** the model, the higher the sale price of a bull dozer.
 ![Product Size Partial Dependence](https://s3.amazonaws.com/chermsbucket/rf_imp_folder/pdp3.png)
 
 The **bigger** the bull dozer, the higher its sale price.
-
-_Partial Dependence is calculated in a similar manner to feature importance, but instead of randomizing the variable, you hold that variable constant and see how each change in that variable effects predictions (e.g. changing all rows to be the year 1990 and then comparing that to all rows being 2004)_
 
 ### Prediction Explanation:
 
