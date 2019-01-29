@@ -17,19 +17,19 @@ _(ex: a NaN value for a product feature might mean it's a model that doesn't hav
 
 ## The Model
 
-For this project I used a **random forest** because of its flexibility with different datatypes and patterns, as well as its ability to provide insight using feature importance, partial dependence plots, and prediction interpretations using ELI5 (this is what we'll be covering).
+For this project I used a **random forest** because of its flexibility with different datatypes and data relationships, as well as its ability to provide insight using feature importance, partial dependence plots, and prediction interpretations using ELI5 (this is what we'll be covering).
 
-_A random forest uses decision trees which split on the feature that gives the highest information gain on a models predictions, and continues doing so until the dataset is accounted for._
+_A random forest uses decision trees which split on the feature that gives the highest information gain on a models predictions, and continues doing so until each data point has its own leaf (unless its configured to stop sooner)._
 
 ![Decision Tree](http://engineering.pivotal.io/images/interpreting-decision-trees-and-random-forests/multi_clf_dt_path.png)
 
-_A random forest uses multiple decision trees that take subsamples of the dataset and split on a subset of the data features, once the estimators spit out their predictions, the mean of all of these predictions is what the random forest will use to predict price._
+_A random forest uses multiple decision trees that take subsamples of the dataset and split on a subset of the data features.  Once the estimators spit out their predictions, the mean of all of these predictions is what the random forest will use to predict price._
 
 ![Random Forest](https://databricks.com/wp-content/uploads/2015/01/Ensemble-example.png)
 
 ## Evaluating Features
 
-Using Feature importance you can see that the year of the bulldozer is very predictive of its price:
+Using Feature importance you can see that the YearMade and ProductSize are very predictive of a bulldozers sale price:
 
 ![Initial Feature Importance](https://s3.amazonaws.com/chermsbucket/rf_imp_folder/feature_importance.png)
 
@@ -39,9 +39,9 @@ _Feature Importance is calculated by randomizing a certain variable in your data
 
 At this point you have a decent idea of what features are important to predict a bull dozers price, a good way to trim out non-predictive features is to check the accuracy of the model, drop any values below a certain feature importance threshold (e.g. < 0.005), and check the accuracy of your model again to see if any of the dropped values impact your predictability.
 
-In this case, the score remains the same so it's safe to say you can remove any variables below that threshold:
-
 ![Feature Importance after Dropping Values](https://s3.amazonaws.com/chermsbucket/rf_imp_folder/feature_importance2.png)
+
+**After keeping only the features above, the validation score went from .9001 to .9033**
 
 ### Removing Redundant Features:
 
@@ -50,8 +50,6 @@ Another great insight is to use a correlation matrix along with a dendrogram to 
 ![Feature Importance after Dropping Values](https://s3.amazonaws.com/chermsbucket/rf_imp_folder/dendrogram.png)
 
 We can see that there are a lot of variables that are very closely related (e.g. saleYear & saleElapsed, Grouser_Tracks & Coupler_System, etc.).  We can use a similar method that we used in feature importance and test to see the models accuracy when these features are removed.
-
-There doesn't appear to be any major differences so it is safe to remove these variables.
 
 **We are now at a point where we have reduced the models dimensionality without sacrificing any accuracy.**
 
@@ -115,3 +113,7 @@ _In a nutshell: These explanations are done by calculating the change in a given
 These further confirm what we saw earlier, that size, year, and AC are good predictors of a bulldozers sale price.
 
 ![Sale Medians](https://s3.amazonaws.com/chermsbucket/rf_imp_folder/summary.png)
+
+## Conclusion:
+
+The model finished with a validation accuracy of .91 and we were able to identify features that were important in predicting sale price (YearMade, ProductSize, Enclosure).  This is a framework that can be used across any tabular data to find insights on what features are important in predicting a given dependent variable.
