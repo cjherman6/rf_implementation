@@ -1,7 +1,7 @@
 # Using a Random Forest for Price Prediction and EDA
 
 ## The Data
-This project analyzed data on bulldozer prices and included 53 predictors on a given bulldozer including the year, sale date, enclosure type (open, enclosed, enclosed w/ AC, etc.)
+This project analyzed data on bulldozer prices and included 53 predictors on a given bulldozer including the year, sale date, enclosure type (open, enclosed, enclosed w/ AC), etc.
 
 ![Bull Dozer Data](https://s3.amazonaws.com/chermsbucket/rf_imp_folder/data.png)
 
@@ -9,13 +9,23 @@ This project analyzed data on bulldozer prices and included 53 predictors on a g
 
 The dataset includes a lot of categorical variables in the form of strings, as well as variables that have a lot of missing values.
 
-I don't want to delete any of the data so early in the project, so I used a function that will convert all string values into categories and use the category codes to feed into the model.
+I don't want to delete any of the data so early in the project, so I used a function that will convert all string values into categories and used their category codes to feed my data into the model.
 
-The next thing I did with continuous predictors that had missing values is fill the missing values with the columns median, but also create a new column that indicates whether that row had a null value for that column. This way the model can identify if a missing value is significant.
+The next thing I had to address was continuous variables that had missing values.  What I did is fill the missing values with the columns median, but also created a new column that indicates whether that row had a null value for that column. This way the model can identify if a missing value is important for this variable.
+
+__(ex: a NaN value for a product feature might mean it's a model that doesn't have that product feature, this could be important)__
 
 ## The Model
 
-For this project I used a **random forest** because of its flexibility to different datatypes and patterns, as well as its ability to provide insight using feature importance, partial dependence plots, and prediction interpretations using ELI5.
+For this project I used a **random forest** because of its flexibility with different datatypes and patterns, as well as its ability to provide insight using feature importance, partial dependence plots, and prediction interpretations using ELI5 (this is what we'll be covering).
+
+__A random forest uses decision trees which split on the feature that gives the highest information gain on a models predictions, and continues doing so until the dataset is accounted for.__
+
+![Decision Tree](http://engineering.pivotal.io/images/interpreting-decision-trees-and-random-forests/multi_clf_dt_path.png)
+
+__A random forest uses multiple decision trees that take subsamples of the dataset and split on a subset of the data features, once the estimators spit out their predictions, the mean of all of these predictions is what the random forest will use to predict price.__
+
+![Random Forest](https://databricks.com/wp-content/uploads/2015/01/Ensemble-example.png)
 
 ## Evaluating Features
 
@@ -23,7 +33,9 @@ Using Feature importance you can see that the year of the bulldozer is very pred
 
 ![Initial Feature Importance](https://s3.amazonaws.com/chermsbucket/rf_imp_folder/feature_importance.png)
 
-Feature Importance is calculated by randomizing a certain variable and calculating the effect this randomization has on a models prediction score.
+__Feature Importance is calculated by randomizing a certain variable (e.g. mixing up year), passing it through the trained model, and calculating how the prediction accuracy changes when this variable is randomized__
+
+
 
 ### Trimming Unimportant Features:
 
@@ -77,9 +89,19 @@ From the graph above, we can see that the bigger the bull dozer, the higher its 
 
 What this graph is telling us is that when a bulldozer is enclosed as opposed to open with an Air Conditioning unit, this is predictive of a higher sale price.
 
+__Partial Dependence is calculated in a similar manner to feature importance, but instead of randomizing the variable, you hold that variable constant and see how each change in that variable effects predictions (e.g. changing all rows to be the year 1990 and then comparing that to all rows being 2004)__
+
 ### Prediction Explanation:
 
 Another way to see how our features can affect a bull dozers sale price is using ELI5 to explain what features contributed to a specific prediction (i.e. an individual row):
+
+A good explanation of how this works can be found [**here**](http://blog.datadive.net/interpreting-random-forests/).
+
+__But in a nutshell: These explanations are done by calculating the change in a given measurement (e.g. average sale price) between nodes after splitting__
+
+![Tree Interpreter](https://s3.amazonaws.com/chermsbucket/rf_imp_folder/tree_interpreter.png)
+
+###Examples:
 
 #### This is a large, 2007 bull dozer that comes with AC, it's sale price was $105,000
 ![Prediction Interpretation](https://s3.amazonaws.com/chermsbucket/rf_imp_folder/large_2007_wAC.png)
