@@ -21,11 +21,11 @@ For this project I used a **random forest** because of its flexibility with diff
 
 _A random forest uses decision trees which split on the feature that gives the highest information gain on a models predictions, and continues doing so until the dataset is accounted for._
 
-![Decision Tree](http://engineering.pivotal.io/images/interpreting_decision_trees_and_random_forests/multi_clf_dt_path.png)
+![Decision Tree](http://engineering.pivotal.io/images/interpreting-decision-trees-and-random-forests/multi_clf_dt_path.png)
 
 _A random forest uses multiple decision trees that take subsamples of the dataset and split on a subset of the data features, once the estimators spit out their predictions, the mean of all of these predictions is what the random forest will use to predict price._
 
-![Random Forest](https://databricks.com/wp_content/uploads/2015/01/Ensemble_example.png)
+![Random Forest](https://databricks.com/wp-content/uploads/2015/01/Ensemble-example.png)
 
 ## Evaluating Features
 
@@ -39,7 +39,7 @@ _Feature Importance is calculated by randomizing a certain variable (e.g. mixing
 
 ### Trimming Unimportant Features:
 
-At this point you have a decent idea of what features are important to predict a bull dozers price, a good way to trim out non_predictive features is to check the accuracy of the model, drop any values below a certain feature importance threshold (e.g. < 0.005), and check the accuracy of your model again to see if any of the dropped values impact your predictability.
+At this point you have a decent idea of what features are important to predict a bull dozers price, a good way to trim out non-predictive features is to check the accuracy of the model, drop any values below a certain feature importance threshold (e.g. < 0.005), and check the accuracy of your model again to see if any of the dropped values impact your predictability.
 
 In this case, the score remains the same so it's safe to say you can remove any variables below that threshold:
 
@@ -95,7 +95,7 @@ _Partial Dependence is calculated in a similar manner to feature importance, but
 
 Another way to see how our features can affect a bull dozers sale price is using ELI5 to explain what features contributed to a specific prediction (i.e. an individual row):
 
-A good explanation of how this works can be found [**here**](http://blog.datadive.net/interpreting_random_forests/).
+A good explanation of how this works can be found [**here**](http://blog.datadive.net/interpreting-random-forests/).
 
 _But in a nutshell: These explanations are done by calculating the change in a given measurement (e.g. average sale price) between nodes after splitting_
 
