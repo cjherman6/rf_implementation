@@ -74,6 +74,16 @@ It's great to know what features are important to a models prediction (i.e. a bu
 
 _Partial Dependence is calculated in a similar manner to feature importance, but instead of randomizing the variable, you hold that variable constant and see how each change in that variable affects predictions (e.g. changing all rows to be the year 1990 and then comparing that to when all rows are 2004)_
 
+#### Side Note:
+
+![Sale by Year](https://s3.amazonaws.com/chermsbucket/rf_imp_folder/saleprice_by_year.png)
+
+Based on the graph above, it would be easy to assume that models made between 1990-1995 will sell less because the price is lower in that time range.
+
+However, it's possible that some other variable is causing this dip (e.g. recession, people can only buy cheaper equipment)
+
+A partial dependency will freeze all variables other than the one being measured, and see how changing the variable being measured effects the dependent variable.  This way, whatever caused the dip from 1990-1995 'occurs' every year and is held consistent, this way we can see the true effect "YearMade" has on "SalePrice"
+
 #### Enclosure (Enclosure EROPS w AC):
 
 ![Enclosure Partial Dependence](https://s3.amazonaws.com/chermsbucket/rf_imp_folder/pdp2.png)
