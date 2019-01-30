@@ -72,7 +72,7 @@ _A category in Enclosure has shown to be extremely important with one hot encodi
 
 It's great to know what features are important to a models prediction (i.e. a bulldozers expected price).  However, it is also important to know **how** a feature affects a models prediction.  One way to do this is prediction interpretation (which I'll explain next), but another way is through calculating partial dependence, which shows how a prediction is affected holding all other variables constant.
 
-_Partial Dependence is calculated in a similar manner to feature importance, but instead of randomizing the variable, you hold that variable constant and see how each change in that variable effects predictions (e.g. changing all rows to be the year 1990 and then comparing that to all rows being 2004)_
+_Partial Dependence is calculated in a similar manner to feature importance, but instead of randomizing the variable, you hold that variable constant and see how each change in that variable affects predictions (e.g. changing all rows to be the year 1990 and then comparing that to when all rows are 2004)_
 
 #### Enclosure (Enclosure EROPS w AC):
 
@@ -102,7 +102,7 @@ _In a nutshell: These explanations are done by calculating the change in a given
 
 ![Tree Interpreter](https://s3.amazonaws.com/chermsbucket/rf_imp_folder/tree_interpreter.png)
 
-###Examples:
+### Examples:
 
 #### This is a large, 2007 bull dozer that comes with AC, it's sale price was $105,000
 ![Prediction Interpretation](https://s3.amazonaws.com/chermsbucket/rf_imp_folder/large_2007_wAC.png)
